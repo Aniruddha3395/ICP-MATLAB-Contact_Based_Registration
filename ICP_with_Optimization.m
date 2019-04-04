@@ -1,42 +1,29 @@
-% profile on;
+% world frame is robot base frame
 clc;
 clear;
 close all;
 dbstop if error;
+set(0, 'DefaultFigureRenderer', 'opengl');
 total_time = tic;
-global time_threshold;
-global x0;
-global w1 w2;
-global neighbour_count;
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%info on data regarding ICP initailization
+
 run global_CONFIG.m
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ICP parameters
-%start seed for icp: eye(4)
-x0 = [0 0 0 1 0 0 0];
-%error function termination tolerence
-Error_threshold = 0.05;     %mm
-%disturbance in seed 
-perturb_val = 0.6;          %mm
-%termination through time limit
-time_threshold = 60;        %sec
-%weights for error function
-w1 = 0.75;w2 = 0.25;
-%neighbour count for least square plane fitting
-neighbour_count = 5;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%ICP... 
-run perform_ICP.m 
-Final_w_T_p = icp_T_final_save*input_w_T_p
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% show output error function value and other values after ICP 
-% run show_results.m
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Perform ICP
+%start T: given by some scanner i.e. input w_T_p
+%start seed for icp: eye(4);
+type = 'mean_plane_d';
+Error_threshold = 0.05;
+perturb_val = 0.6;
+input_w_T_p  = all_input_w_T_p(1);
+run perform_ICP.m 
+% output 
+run show_results.m
+toc(total_time);
 
 % if wanted to execute some trajectory with final transformation:
 %%%%%%%%%%%
 % run compute_traj_wrt_robot_base.m
 %%%%%%%%%%%
-% profile viewer;
+

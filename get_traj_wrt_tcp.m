@@ -20,5 +20,5 @@ end
 
 %saves only xyz and not euler angles
 scan_traj_wrt_tcp = transformed_pt(:,1:3);
-dlmwrite(strcat(icp_dir,'data_files/scanned_traj.csv'),scan_traj_wrt_tcp);
+dlmwrite(strcat(icp_dir,data_file_dir,'scanned_traj.csv'),scan_traj_wrt_tcp);
 end

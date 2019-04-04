@@ -1,9 +1,8 @@
 function [dist_p_plane] = get_pt_to_lsf_plane_dist(p,pts_for_plane)
 
-x_avg = sum(pts_for_plane(:,1))/size(pts_for_plane,1);
-y_avg = sum(pts_for_plane(:,2))/size(pts_for_plane,1);
-z_avg = sum(pts_for_plane(:,3))/size(pts_for_plane,1);
-
+x_avg = mean(pts_for_plane(:,1));
+y_avg = mean(pts_for_plane(:,2));
+z_avg = mean(pts_for_plane(:,3));
 L00 = sum((pts_for_plane(:,1)-x_avg).^2);
 L01 = sum((pts_for_plane(:,1)-x_avg).*(pts_for_plane(:,2)-y_avg));
 L11 = sum((pts_for_plane(:,2)-y_avg).^2);

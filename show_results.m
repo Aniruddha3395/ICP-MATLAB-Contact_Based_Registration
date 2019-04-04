@@ -1,7 +1,7 @@
 %% SHOW OUTPUT
 
 %icp_T is transformation of part wrt scan
-toc(total_time);
+Final_w_T_p = icp_T_final_save*input_w_T_p;
 hold on;
 %plotting robot base
 scatter3(0,0,0,100,'d','filled','r');
@@ -10,6 +10,14 @@ quiver3(0,0,0,1,0,0,100,'r');hold on;quiver3(0,0,0,0,1,0,100,'g');hold on;quiver
 hold on;
 %plotting scan traj
 scatter3d(scan_traj,'filled');
+
+% transformed_ptcloud = apply_transformation(input_part_ptcloud_icp_true,eye(4));
+% hold on;
+% scatter3d(transformed_ptcloud,'r.');
+% transformed_ptcloud = apply_transformation(input_part_ptcloud_icp,icp_T);
+% hold on;
+% scatter3d(transformed_ptcloud,'b.');
+
 transformed_ptcloud = apply_transformation(part_ptcloud,Final_w_T_p);
 hold on;
 scatter3d(transformed_ptcloud,'g.');
@@ -31,6 +39,5 @@ end
 Error_mean_plane_d = sum(d)/size(d,1);
 Error_max_plane_d = max(d);
 
-fprintf('max_d :%f,\n max_plane_d :%f,\n mean_d :%f,\n mean_plane_d :%f,\n weighted_max_mean_d :%f\n',...
-    Error_max_d,Error_max_plane_d,Error_mean_d,Error_mean_plane_d,Error_weighted_max_mean_d);
+fprintf('max_d :%f,\n max_plane_d :%f,\n mean_d :%f,\n mean_plane_d :%f,\n weighted_max_mean_d :%f\n',Error_max_d,Error_max_plane_d,Error_mean_d,Error_mean_plane_d,Error_weighted_max_mean_d);
 disp(Final_w_T_p);
