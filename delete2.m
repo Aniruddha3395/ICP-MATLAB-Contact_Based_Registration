@@ -2,67 +2,70 @@ clc;
 clear;
 close all;
 
-%plane fit
-a = randi([-10,10],10,2);
-% a = [a,randi([0,1],10,1)];
-a = [a,0.5*rand(10,1)];
-scatter3(a(:,1),a(:,2),a(:,3),'filled');
+%input
+pt_cloud = randi([-200,200],2000,3);
+input_pt = [5,5,5];
+
+scatter3(pt_cloud(:,1),pt_cloud(:,2),pt_cloud(:,3),'filled')
 daspect([1 1 1]);
-%plane fitting
-
-store = randi([-10,10],10,2);
-[zval] = get_pt_to_lsf_plane_dist(store,a);
-tri = [store,zval];[store(1,:),zval(1)];
+closest_pt = norm(input_pt-pt_cloud(1,:));
+%brute force
+for i = 2:size(pt_cloud)
+    if norm(input_pt-pt_cloud(i,:))<norm(input_pt-closest_pt)
+        closest_pt = pt_cloud(i,:);
+    end
+end
 hold on;
-scatter3(tri(:,1),tri(:,2),tri(:,3),'filled');
+scatter3(closest_pt(1),closest_pt(2),closest_pt(3),'y','filled')
+closest_pt
+norm(closest_pt-input_pt)
+
+centroid = mean(pt_cloud);
+store_pt_cloud = {[],[],[],[],[],[],[],[]};
+
+for i = 1:size(pt_cloud)
+   if pt_cloud(i,1)>=centroid(1,1) && pt_cloud(i,2)>=centroid(1,2) && pt_cloud(i,3)>=centroid(1,3) 
+        store_pt_cloud{1,1} = [store_pt_cloud{1,1};pt_cloud(i,:)];
+   elseif pt_cloud(i,1)<=centroid(1,1) && pt_cloud(i,2)>=centroid(1,2) && pt_cloud(i,3)>=centroid(1,3) 
+        store_pt_cloud{1,2} = [store_pt_cloud{1,2};pt_cloud(i,:)];
+   elseif pt_cloud(i,1)>=centroid(1,1) && pt_cloud(i,2)<=centroid(1,2) && pt_cloud(i,3)>=centroid(1,3) 
+        store_pt_cloud{1,3} = [store_pt_cloud{1,3};pt_cloud(i,:)];
+   elseif pt_cloud(i,1)>=centroid(1,1) && pt_cloud(i,2)>=centroid(1,2) && pt_cloud(i,3)<=centroid(1,3) 
+        store_pt_cloud{1,4} = [store_pt_cloud{1,4};pt_cloud(i,:)];
+   elseif pt_cloud(i,1)<=centroid(1,1) && pt_cloud(i,2)<=centroid(1,2) && pt_cloud(i,3)>=centroid(1,3) 
+        store_pt_cloud{1,5} = [store_pt_cloud{1,5};pt_cloud(i,:)];
+   elseif pt_cloud(i,1)<=centroid(1,1) && pt_cloud(i,2)>=centroid(1,2) && pt_cloud(i,3)<=centroid(1,3) 
+        store_pt_cloud{1,6} = [store_pt_cloud{1,6};pt_cloud(i,:)];
+   elseif pt_cloud(i,1)>=centroid(1,1) && pt_cloud(i,2)<=centroid(1,2) && pt_cloud(i,3)<=centroid(1,3) 
+        store_pt_cloud{1,7} = [store_pt_cloud{1,7};pt_cloud(i,:)];
+   else 
+        store_pt_cloud{1,8} = [store_pt_cloud{1,8};pt_cloud(i,:)];
+   end
+end
+
+%%region_selection
+norm_vals = [norm(input_pt-mean(store_pt_cloud{1,1}));
+            norm(input_pt-mean(store_pt_cloud{1,2}));
+            norm(input_pt-mean(store_pt_cloud{1,3}));
+            norm(input_pt-mean(store_pt_cloud{1,4}));
+            norm(input_pt-mean(store_pt_cloud{1,5}));
+            norm(input_pt-mean(store_pt_cloud{1,6}));
+            norm(input_pt-mean(store_pt_cloud{1,7}));
+            norm(input_pt-mean(store_pt_cloud{1,8}))];
+
+min_norm_val = find(norm_vals==min(norm_vals));
+closer_region = store_pt_cloud{min_norm_val};
+
+closest_pt = closer_region(1,:);
+for i = 2:size(closer_region,1)
+    if norm(input_pt-closer_region(i,:))<norm(input_pt-closest_pt)
+        closest_pt = closer_region(i,:);
+    end
+end
+
 hold on;
-plot3(tri(:,1),tri(:,2),tri(:,3));
-
-
-% clc;
-% clear;
-% close all;
-% 
-% %plane fit
-% a = randi([-10,10],10,2);
-% % a = [a,randi([0,1],10,1)];
-% a = [a,0.5*rand(10,1)];
-% scatter3(a(:,1),a(:,2),a(:,3),'filled');
-% daspect([1 1 1]);
-% %plane fitting
-% x = a(:,1); y = a(:,2); z = a(:,3);
-% x_avg = mean(a(:,1));y_avg = mean(a(:,2));z_avg = mean(a(:,3));
-% L00 = sum((x-x_avg).^2);
-% L01 = sum((x-x_avg).*(y-y_avg));
-% L11 = sum((y-y_avg).^2);
-% R0 = sum((z-z_avg).*(x-x_avg));
-% R1 = sum((z-z_avg).*(y-y_avg));
-% 
-% a2 = -((L11*R0-L01*R1)/(L00*L11-L01^2));
-% b2 = -((L00*R1-L01*R0)/(L00*L11-L01^2));
-% c2 = 1;
-% d2 = -(z_avg+a2*x_avg+b2*y_avg);
-% 
-% 
-% zval = [];
-% store = randi([-10,10],10,2);
-% zval = [((-d2-(a2*store(:,1))-(b2*store(:,2)))/c2)];
-% tri = [store,zval];[store(1,:),zval(1)];
-% hold on;
-% scatter3(tri(:,1),tri(:,2),tri(:,3),'filled');
-% hold on;
-% plot3(tri(:,1),tri(:,2),tri(:,3));
-% 
-
-
-
-
-
-
-
-
-
-
-
-
-
+scatter3(closest_pt(1),closest_pt(2),closest_pt(3),'r','filled')
+closest_pt
+norm(closest_pt-input_pt)
+hold on;
+scatter3(input_pt(1),input_pt(2),input_pt(3),'g','filled')

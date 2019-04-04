@@ -22,7 +22,6 @@ function [bx,by,bz,strt_idx,end_idx] = compute_TCP(points,range,normals)
         end
         dir_vec = [1 0 0];
         tool_z = -normals(j,:);
-%         tool_z = [0 0 -1];       
         tool_y = cross(tool_z,dir_vec);
         tool_y = tool_y / norm(tool_y);
         tool_x = cross(tool_y,tool_z);

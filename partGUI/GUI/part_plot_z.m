@@ -15,9 +15,8 @@ global raw_scan_pts_wrt_tcp;
     cla;
     [v,n] = stlTransform(original_v,original_n,w_T_part);
     stlPlot(v, original_f, original_name, [0.5 0.5 0.5]);
-%     axis([-1 1 -1 1 -1 1])
+    axis([-1 1 -1 1 -1 1])
     daspect([1 1 1])   
     hold on;
     scatter3d(raw_scan_pts_wrt_tcp,'.');
-    run find_True_w_T_p;
 end
