@@ -1,10 +1,11 @@
 function [scan_traj_wrt_tcp] = get_traj_wrt_tcp(file_name)
 
-global tool_F_T_tcp icp_dir data_file_dir;
+global tool_F_T_tcp icp_dir;
 %get appropriate scan data for ICP
 traj_from_kuka_scanning = dlmread(file_name);
 
 pts_from_tcp_publisher = unique(traj_from_kuka_scanning,'stable','rows');
+pts_from_tcp_publisher(:,1:3) = pts_from_tcp_publisher(:,1:3).*1000;
 
 % angles values must be radians
 transformed_pt = zeros(size(pts_from_tcp_publisher,1),6);
