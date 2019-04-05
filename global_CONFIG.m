@@ -6,7 +6,7 @@ global icp_dir;
 
 %%%%%%%%%%<< PATH for ICP >>%%%%%%%%%%%%
 % give appropriate path of ICP folder
-icp_dir = '/home/cl/Desktop/ANIRUDDHA_WS/ICP-MATLAB-Contact_Based_Registration-master/';
+icp_dir = '/home/cl/Desktop/ANIRUDDHA_WS/GIT/ICP-MATLAB-Contact_Based_Registration/';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% << INPUTS >> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % give appropriate inputs
@@ -40,8 +40,14 @@ input_w_T_p = [
     0         0         0    1.0000
     ];
 cba = rotm2eul(input_w_T_p(1:3,1:3));
-cba(1) = cba(1)+5*pi/180;
-cba(2) = cba(2)+5*pi/180;
+cba(1) = cba(1)+2*pi/180;
+cba(2) = cba(2)+2*pi/180;
+cba(3) = cba(3)+2*pi/180;
+input_w_T_p(1,4) = input_w_T_p(1,4) + 8;
+input_w_T_p(2,4) = input_w_T_p(2,4) - 2;
+input_w_T_p(3,4) = input_w_T_p(3,4) + 0;
+
+
 
 input_w_T_p(1:3,1:3) = eul2rotm(cba);
 
