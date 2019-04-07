@@ -33,19 +33,32 @@ stl_file = 'Composite_Mold.STL';
 %     0         0         0    1.0000
 %     ];
 
+% transformation for Composite Mold and iiwa 14
 input_w_T_p = [
     -0.9998    0.0217   -0.0009  867.1061
     -0.0217   -0.9998    0.0012  271.0798
     -0.0009    0.0012    1.0000   11.3983
     0         0         0    1.0000
     ];
+
+% transformation for dome and iiwa 14
+input_w_T_p = eye(4);
+input_w_T_p(1,4) = 381;
+input_w_T_p(2,4) = 736;
+input_w_T_p(1:3,1:3) = rotz(180);
+
 cba = rotm2eul(input_w_T_p(1:3,1:3));
 cba(1) = cba(1)+2*pi/180;
 cba(2) = cba(2)+2*pi/180;
 cba(3) = cba(3)+2*pi/180;
-input_w_T_p(1,4) = input_w_T_p(1,4) + 8;
-input_w_T_p(2,4) = input_w_T_p(2,4) - 2;
-input_w_T_p(3,4) = input_w_T_p(3,4) + 0;
+input_w_T_p(1,4) = input_w_T_p(1,4) + 5;
+input_w_T_p(2,4) = input_w_T_p(2,4) - 1;
+input_w_T_p(3,4) = input_w_T_p(3,4) + 1;
+
+% transformation between skylight hood and iiwa 14
+
+
+
 
 
 

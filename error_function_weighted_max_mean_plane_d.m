@@ -14,7 +14,7 @@ for i = 1:size(scan_traj,1)
     corresponding_val_from_part_ptcloud = transformed_data(idx(i,:),:);
     d(i) = get_pt_to_lsf_plane_dist(scan_traj(i,:),corresponding_val_from_part_ptcloud);
     if (isnan(d(i)))
-        if i==0
+        if i==1
             d(i) = 0;
         else
         d(i) = d(i-1);
