@@ -33,7 +33,7 @@ Final_w_T_p = icp_T_final_save*input_w_T_p
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % show output error function value and other values after ICP 
-% run show_results.m
+run show_results.m
 
 % if wanted to execute some trajectory with final transformation:
 %%%%%%%%%%%
