@@ -6,7 +6,7 @@ global icp_dir;
 
 %%%%%%%%%%<< PATH for ICP >>%%%%%%%%%%%%
 % give appropriate path of ICP folder
-icp_dir = '/home/cl/Desktop/ANIRUDDHA_WS/GIT/ICP-MATLAB-Contact_Based_Registration/';
+icp_dir = '/home/aniruddha/Desktop/GIT/ICP-MATLAB-Contact_Based_Registration/';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% << INPUTS >> %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % give appropriate inputs
@@ -19,7 +19,7 @@ tool_F_T_tcp = [tool_r,tool_t;0 0 0 1];
 
 % STL File
 % NOTE: will be used to generate the model pointcloud)
-stl_file = 'Composite_Mold.STL';
+stl_file = 'Heli_Blade.STL';
 
 % Input tranformation matrix for ICP
 % NOTE: either express in 4by4 matrix or in euler angle and xyz
@@ -78,9 +78,7 @@ else
     part_ptcloud_normals = dlmread(strcat(icp_dir,'data_files/part_ptcloud_normals.csv'));
 end
 if generate_scan_traj_data
-    %     scan_traj = get_traj_wrt_tcp(strcat(icp_dir,'data_files/data_for_ICP.csv'));
-    scan_traj = get_traj_wrt_tcp('/home/cl/Documents/KUKA_Shared/probing_data.csv');
-    
+    scan_traj = get_traj_wrt_tcp(strcat(icp_dir,'data_files/probing_data.csv'));
 else
     scan_traj = dlmread(strcat(icp_dir,'data_files/scanned_traj.csv'));
 end
